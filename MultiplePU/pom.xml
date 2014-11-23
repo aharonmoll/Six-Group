@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.multipu.test</groupId>
+    <artifactId>MultiplePU</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>MultiplePU</name>
+    <packaging>pom</packaging>
+    <repositories>
+        <repository>
+            <id>org.openspaces</id>
+            <url>http://maven-repository.openspaces.org</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>org.openspaces</id>
+            <url>http://maven-repository.openspaces.org</url>
+        </pluginRepository>
+    </pluginRepositories>
+    <properties>
+        <gsVersion>10.0.1-11830-RELEASE</gsVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <log4j.version>1.2.17</log4j.version>
+        <slf4j.version>1.7.7</slf4j.version>
+        <spring.version>3.1.3.RELEASE</spring.version>
+    </properties>
+    <modules>
+        <module>common</module>
+        <module>processor</module>
+        <module>feeder</module>
+    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- GigaSpaces uses a custom JUL logging implementation, so here we
+            pump GigaSpaces logging events to slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jul-to-slf4j</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <!-- Our "underlying" (i.e. destination) logging implementation
+            will be log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.gigaspaces</groupId>
+            <artifactId>gs-openspaces</artifactId>
+            <version>10.1.0-12581-M1</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <defaultGoal>package</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+                <version>2.3.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2-beta-2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-openspaces-plugin</artifactId>
+                <version>10.0.1-11830-RELEASE</version>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!-- Align spring versions for all projects using openspaces -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.gigaspaces</groupId>
+                <artifactId>gs-openspaces</artifactId>
+                <version>10.0.1-11830-RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
